@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ENVI — AI Video Production Studio</title>
+<style>
+:root {
+  --bg:#101820;
+  --panel:#1b2933;
+  --panel2:#243640;
+  --mint:#75e0bd;
+  --text:#eef7f4;
+  --muted:#9aafb0;
+  --line:#344a53;
+  --yellow:#f4c66a;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,sans-serif;
+}
+header{
+  padding:18px 20px;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;background:var(--bg);z-index:5;
+}
+.logo{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--mint)}
+.logo small{display:block;font-size:9px;letter-spacing:2px;color:var(--muted)}
+.status{font-size:11px;color:var(--mint)}
+nav{
+  display:flex;gap:8px;padding:12px 16px;overflow:auto;
+  border-bottom:1px solid var(--line);
+}
+nav button,.secondary{
+  background:var(--panel);color:var(--text);
+  border:1px solid var(--line);padding:10px 14px;
+  border-radius:9px;white-space:nowrap;
+}
+nav button.active{border-color:var(--mint);color:var(--mint)}
+main{max-width:1000px;margin:auto;padding:20px 16px 60px}
+h1{font-size:27px;margin:4px 0}
+h2{font-size:17px;margin:0 0 14px}
+p{color:var(--muted);line-height:1.5}
+.panel{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:17px;margin:16px 0;
+}
+.eyebrow{font-size:10px;color:var(--mint);letter-spacing:2px;font-weight:800}
+input,select{
+  width:100%;padding:13px;border-radius:9px;
+  background:#101b22;color:var(--text);
+  border:1px solid var(--line);margin:8px 0 12px;
+  font-size:14px;
+}
+button{cursor:pointer;font:inherit}
+.primary{
+  background:var(--mint);color:#10251f;border:0;
+  border-radius:9px;padding:13px 17px;font-weight:800;
+  width:100%;
+}
+.primary:disabled{opacity:.5}
+.grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.worker{
+  background:var(--panel2);border:1px solid var(--line);
+  border-radius:11px;padding:13px;min-height:100px;
+}
+.worker .emoji{font-size:25px}
+.worker strong{display:block;margin:5px 0}
+.worker small{color:var(--muted)}
+.job{
+  border:1px solid var(--line);border-radius:11px;
+  padding:13px;margin-top:10px;background:#17242c;
+  overflow-wrap:anywhere;
+}
+.jobhead{display:flex;justify-content:space-between;gap:8px}
+.tag{font-size:10px;color:var(--yellow);border:1px solid #79633b;
+  padding:4px 7px;border-radius:20px;height:max-content}
+.muted{color:var(--muted);font-size:12px}
+.empty{text-align:center;padding:24px;color:var(--muted)}
+.message{font-size:13px;margin-top:10px}
+.good{color:var(--mint)}
+.bad{color:#ff9d91}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:25px}
+@media(min-width:700px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  main{padding-top:30px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ENVI<small>AI VIDEO PRODUCTION STUDIO</small></div>
+  <div class="status">● STUDIO CONSOLE</div>
+</header>
+
+<nav>
+  <button class="active" data-page="studio">Studio</button>
+  <button data-page="quests">Quest Board</button>
+  <button data-page="library">Clip Library</button>
+  <button data-page="release">Release Room</button>
+  <button data-page="settings">Settings</button>
+</nav>
+
+<main>
+<section id="studio">
+  <div class="eyebrow">YOUR PRODUCTION FLOOR</div>
+  <h1>Selamat datang di ENVI.</h1>
+  <p>Masukkan video sumber. Tim produksi akan menyiapkan antrean pekerjaanmu.</p>
+
+  <div class="panel">
+    <h2>＋ Buat Quest Baru</h2>
+    <label for="youtubeUrl" class="muted">URL video YouTube</label>
+    <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=...">
+    <label for="count" class="muted">Jumlah kandidat momen</label>
+    <select id="count">
+      <option value="2">2 kandidat</option>
+      <option value="3" selected>3 kandidat</option>
+      <option value="4">4 kandidat</option>
+      <option value="5">5 kandidat</option>
+    </select>
+    <button class="primary" id="createBtn">KIRIM KE STUDIO →</button>
+    <div id="message" class="message"></div>
+  </div>
+
+  <div class="eyebrow">THE CREW</div>
+  <h2>Enam pekerja produksi</h2>
+  <div class="grid">
+    <div class="worker"><div class="emoji">📦</div><strong>Si Kurir</strong><small>Penerimaan sumber video</small></div>
+    <div class="worker"><div class="emoji">🔎</div><strong>Si Pemburu Momen</strong><small>Pencarian momen menarik</small></div>
+    <div class="worker"><div class="emoji">📝</div><strong>Si Juru Tulis</strong><small>Transkripsi percakapan</small></div>
+    <div class="worker"><div class="emoji">🎬</div><strong>Si Editor</strong><small>Potong dan format video</small></div>
+    <div class="worker"><div class="emoji">✍️</div><strong>Si Copywriter</strong><small>Judul dan caption</small></div>
+    <div class="worker"><div class="emoji">🛡️</div><strong>Si QC</strong><small>Pemeriksaan hasil akhir</small></div>
+  </div>
+</section>
+
+<section id="quests" hidden>
+  <div class="eyebrow">PRODUCTION QUEUE</div>
+  <h1>Quest Board</h1>
+  <p>Daftar pekerjaan yang tersimpan di backend ENVI.</p>
+  <button class="secondary" id="refreshBtn">↻ Muat ulang Quest</button>
+  <div id="jobs"><div class="empty">Memuat daftar Quest...</div></div>
+</section>
+
+<section id="library" hidden>
+  <div class="eyebrow">YOUR OUTPUTS</div>
+  <h1>Clip Library</h1>
+  <div class="panel"><p>Belum ada video hasil produksi. Klip akan muncul di sini setelah pipeline editing selesai diaktifkan.</p></div>
+</section>
+
+<section id="release" hidden>
+  <div class="eyebrow">FINAL INSPECTION</div>
+  <h1>Release Room</h1>
+  <div class="panel"><p>Ruang pemeriksaan dan unduh video akan aktif setelah integrasi FFmpeg dan QC selesai.</p></div>
+</section>
+
+<section id="settings" hidden>
+  <div class="eyebrow">SYSTEM CONFIGURATION</div>
+  <h1>Settings</h1>
+  <div class="panel">
+    <label class="muted" for="apiUrl">Alamat backend API</label>
+    <input id="apiUrl" placeholder="https://nama-backend.onrender.com">
+    <button class="primary" id="saveApi">SIMPAN ALAMAT API</button>
+    <div id="apiMessage" class="message"></div>
+    <p class="muted">Masukkan alamat backend Render setelah deployment berhasil. Jangan tambahkan / di bagian akhir.</p>
+  </div>
+</section>
+</main>
+
+<footer>ENVI STUDIO · BUILD 1.0 · PRODUCTION SYSTEM</footer>
+
+<script>
+const apiInput = document.getElementById("apiUrl");
+const savedApi = localStorage.getItem("envi_api") || "";
+apiInput.value = savedApi;
+
+function apiBase(){
+  return (localStorage.getItem("envi_api") || "").trim().replace(/\/+$/, "");
+}
+
+document.querySelectorAll("nav button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+    button.classList.add("active");
+    document.querySelectorAll("main section").forEach(s=>s.hidden=true);
+    document.getElementById(button.dataset.page).hidden=false;
+    if(button.dataset.page==="quests") loadJobs();
+  });
+});
+
+document.getElementById("saveApi").addEventListener("click",()=>{
+  const value=apiInput.value.trim().replace(/\/+$/,"");
+  localStorage.setItem("envi_api",value);
+  document.getElementById("apiMessage").textContent="Alamat API tersimpan di perangkat ini.";
+  document.getElementById("apiMessage").className="message good";
+});
+
+document.getElementById("createBtn").addEventListener("click",async()=>{
+  const url=document.getElementById("youtubeUrl").value.trim();
+  const count=Number(document.getElementById("count").value);
+  const message=document.getElementById("message");
+  const button=document.getElementById("createBtn");
+
+  if(!apiBase()){
+    message.textContent="Isi alamat backend terlebih dahulu di Settings.";
+    message.className="message bad";
+    return;
+  }
+  if(!url){
+    message.textContent="Masukkan URL video terlebih dahulu.";
+    message.className="message bad";
+    return;
+  }
+
+  button.disabled=true;
+  button.textContent="MENGIRIM QUEST...";
+  message.textContent="Menghubungi server ENVI...";
+  message.className="message";
+
+  try{
+    const response=await fetch(apiBase()+"/api/jobs",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({url:url,candidate_count:count})
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error(data.detail || "Gagal membuat Quest.");
+
+    message.textContent="Quest berhasil dibuat! ID: "+data.job_id;
+    message.className="message good";
+    document.getElementById("youtubeUrl").value="";
+  }catch(error){
+    message.textContent="Gagal: "+error.message;
+    message.className="message bad";
+  }finally{
+    button.disabled=false;
+    button.textContent="KIRIM KE STUDIO →";
+  }
+});
+
+async function loadJobs(){
+  const container=document.getElementById("jobs");
+  if(!apiBase()){
+    container.innerHTML='<div class="empty">Atur alamat backend di Settings terlebih dahulu.</div>';
+    return;
+  }
+  container.innerHTML='<div class="empty">Mengambil data dari server...</div>';
+
+  try{
+    const response=await fetch(apiBase()+"/api/jobs");
+    if(!response.ok) throw new Error("Server tidak merespons.");
+    const jobs=await response.json();
+
+    if(!jobs.length){
+      container.innerHTML='<div class="empty">Belum ada Quest. Buat Quest pertama di Studio.</div>';
+      return;
+    }
+
+    container.innerHTML="";
+    jobs.forEach(job=>{
+      const card=document.createElement("div");
+      card.className="job";
+
+      const head=document.createElement("div");
+      head.className="jobhead";
+      const title=document.createElement("strong");
+      title.textContent="Quest "+job.id.slice(0,8);
+      const tag=document.createElement("span");
+      tag.className="tag";
+      tag.textContent=job.status;
+      head.append(title,tag);
+
+      const url=document.createElement("p");
+      url.className="muted";
+      url.textContent=job.url;
+
+      const stage=document.createElement("p");
+      stage.className="muted";
+      stage.textContent="Tahap: "+job.stage;
+
+      const candidates=document.createElement("p");
+      candidates.className="muted";
+      candidates.textContent=(job.candidates || []).length+" kandidat klip";
+
+      card.append(head,url,stage,candidates);
+      container.append(card);
+    });
+  }catch(error){
+    container.innerHTML='<div class="empty">Gagal memuat Quest: '+error.message+'</div>';
+  }
+}
+
+document.getElementById("refreshBtn").addEventListener("click",loadJobs);
+</script>
+</body>
+</html>
